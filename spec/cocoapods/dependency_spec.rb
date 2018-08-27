@@ -169,5 +169,5 @@ RSpec.describe Cocoapods::Dependency do
     expect(
       Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
     ).to eq(res_map)
-  end  
+  end
 end
