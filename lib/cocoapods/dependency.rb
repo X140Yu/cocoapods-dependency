@@ -5,10 +5,17 @@ require 'pp'
 
 module Cocoapods
   class DependencyAnalyzer
+
     def self.analyze(podfile_dir_path)
+      self.analyze_with_podfile(
+        podfile_dir_path, 
+        Pod::Podfile.from_file(podfile_dir_path + 'Podfile'), 
+        Pod::Lockfile.from_file(Pathname.new(podfile_dir_path + 'Podfile.lock'))
+      )
+    end
+
+    def self.analyze_with_podfile(podfile_dir_path, podfile, lockfile = nil)
       Dir.chdir(podfile_dir_path) do
-        podfile = Pod::Podfile.from_file(podfile_dir_path + 'Podfile')
-        lockfile = Pod::Lockfile.from_file(Pathname.new(podfile_dir_path + 'Podfile.lock'))
 
         analyzer = Pod::Installer::Analyzer.new(
           Pod::Sandbox.new(Dir.mktmpdir),
