@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/cocoapods/analyze'
+require 'pp'
+
+path = ARGV.shift
+raise 'Please pass the path of the podfile directory as the argument' unless path
+
+pp Cocoapods::DependencyAnalyzer.analyze(path)
