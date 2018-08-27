@@ -149,4 +149,25 @@ RSpec.describe Cocoapods::Dependency do
       Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
     ).to eq(res_map)
   end
+
+  it 'dependencies with subspec 5' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        # https://github.com/TextureGroup/Texture/blob/master/Texture.podspec
+        pod 'Texture', '2.7'
+      end
+    end
+
+    res_map = {
+      'Texture' => %w[PINRemoteImage PINCache PINOperation],
+      'PINCache' => %w[PINOperation],
+      'PINRemoteImage' => %w[PINOperation PINCache],
+      'PINOperation' => [],
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end  
 end
