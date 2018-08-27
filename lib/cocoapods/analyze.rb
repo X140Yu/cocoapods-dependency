@@ -1,4 +1,3 @@
-require 'cocoapods/dependency/version'
 require 'cocoapods'
 require 'pathname'
 
@@ -11,8 +10,8 @@ module Cocoapods
       Dir.chdir(podfile_dir_path) do
         analyze_with_podfile(
           podfile_dir_path,
-          Pod::Podfile.from_file(podfile_dir_path + 'Podfile'),
-          Pod::Lockfile.from_file(Pathname.new(podfile_dir_path + 'Podfile.lock'))
+          Pod::Podfile.from_file(podfile_dir_path + '/Podfile'),
+          Pod::Lockfile.from_file(Pathname.new(podfile_dir_path + '/Podfile.lock'))
         )
       end
     end
@@ -74,7 +73,10 @@ module Cocoapods
       map[name].each do |k|
         find_dependencies(k.name, map, res, specs, root_name)
         dependency = specs.find { |s| s.name == k.name.split('/')[0] }
-        res.push dependency.name if dependency && dependency.name != root_name
+        if dependency && dependency.name != root_name
+          res.push dependency.name
+          puts "#{root_name} #{dependency.name}"
+        end
       end
       res
     end

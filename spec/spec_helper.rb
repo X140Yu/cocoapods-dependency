@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "cocoapods/dependency"
+require "cocoapods/analyze"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
