@@ -20,11 +20,12 @@ RSpec.describe Cocoapods::Dependency do
 
   it 'custom podfile with simple dependency' do
     podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
       target 'Test' do
-        pod 'AFNetworking'
+        pod 'Masonry'
       end
     end
 
-    Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    expect(Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)).to eq({'Masonry' => []})
   end
 end

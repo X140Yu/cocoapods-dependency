@@ -25,7 +25,7 @@ module Cocoapods
 
         specifications = analyzer.analyze.specifications.map(&:root).uniq
 
-        def subspecs_with_name(s, subspecs_short_names)
+        def self.subspecs_with_name(s, subspecs_short_names)
           ret = []
           subspecs_short_names.each do |name|
             ret.push(s.subspecs.find { |ss| ss.name.include? name })
@@ -46,7 +46,7 @@ module Cocoapods
           end
         end
 
-        def find_dependencies(name, map, res)
+        def self.find_dependencies(name, map, res)
           return unless map[name]
           res.push name if map[name].empty?
           # res += map[name].map(&:name)
@@ -71,7 +71,7 @@ module Cocoapods
           new_map[k] = find_dependencies(k, map, []).uniq
         end
 
-        pp new_map
+        return new_map
         pp map
 
         # p specifications
