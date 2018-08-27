@@ -104,4 +104,49 @@ RSpec.describe Cocoapods::Dependency do
       Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
     ).to eq(res_map)
   end
+
+  it 'dependencies with subspec 3' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        # https://github.com/rs/SDWebImage/blob/master/SDWebImage.podspec
+        pod 'SDWebImage/GIF', '4.4.2'
+        pod 'SDWebImage/WebP', '4.4.2'
+      end
+    end
+
+    res_map = {
+      'SDWebImage' => %w[FLAnimatedImage libwebp],
+      'FLAnimatedImage' => [],
+      'libwebp' => [],
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end
+
+  it 'dependencies with subspec 4' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        # https://github.com/rs/SDWebImage/blob/master/SDWebImage.podspec
+        pod 'SDWebImage/GIF', '4.4.2'
+        pod 'SDWebImage/WebP', '4.4.2'
+        pod 'RxCocoa', '4.2'
+      end
+    end
+
+    res_map = {
+      'SDWebImage' => %w[FLAnimatedImage libwebp],
+      'FLAnimatedImage' => [],
+      'libwebp' => [],
+      'RxCocoa' => %w[RxSwift],
+      'RxSwift' => [],
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end
 end
