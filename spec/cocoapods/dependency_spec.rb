@@ -77,9 +77,7 @@ RSpec.describe Cocoapods::Dependency do
     end
 
     res_map = {
-      'SDWebImage' => %w[FLAnimatedImage libwebp],
-      'FLAnimatedImage' => [],
-      'libwebp' => []
+      'SDWebImage' => [],
     }
 
     expect(
