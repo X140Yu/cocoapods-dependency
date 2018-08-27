@@ -22,7 +22,7 @@ RSpec.describe Cocoapods::Dependency do
     podfile = Pod::Podfile.new do
       project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
       target 'Test' do
-        pod 'Masonry'
+        pod 'Masonry', '1.0'
       end
     end
 
@@ -35,8 +35,8 @@ RSpec.describe Cocoapods::Dependency do
     podfile = Pod::Podfile.new do
       project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
       target 'Test' do
-        pod 'Masonry'
-        pod 'ReactiveObjC'
+        pod 'Masonry', '1.0'
+        pod 'ReactiveObjC', '1.0.1'
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe Cocoapods::Dependency do
     podfile = Pod::Podfile.new do
       project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
       target 'Test' do
-        pod 'RxCocoa'
+        pod 'RxCocoa', '4.2'
       end
     end
 
