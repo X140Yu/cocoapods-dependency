@@ -49,4 +49,22 @@ RSpec.describe Cocoapods::Dependency do
       Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
     ).to eq(res_map)
   end
+
+  it 'dependencies with dependencies' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        pod 'RxCocoa'
+      end
+    end
+
+    res_map = {
+      'RxSwift' => [],
+      'RxCocoa' => ['RxSwift'],
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end
 end
