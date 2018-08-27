@@ -64,17 +64,20 @@ module Cocoapods
 
       new_map = {}
       specifications.each do |s|
-        new_map[s.name] = find_dependencies(s.name, map, [], specifications).uniq
+        new_map[s.name] = find_dependencies(s.name, map, [], specifications, s.name).uniq.sort
       end
 
       new_map
     end
 
-    def self.find_dependencies(name, map, res, specs)
+    def self.find_dependencies(name, map, res, specs, root_name)
       return unless map[name]
       map[name].each do |k|
-        find_dependencies(k.name, map, res, specs)
-        res.push k.name if specs.find { |s| s.name == k.name }
+        find_dependencies(k.name, map, res, specs, root_name)
+        # res.push k.name if specs.find { |s| s.name == k.name }
+        dependency = specs.find { |s| s.name == k.name.split('/')[0] }
+        # puts "#{dependency.name} #{name}"
+        res.push dependency.name if dependency && dependency.name != root_name
       end
       res
     end

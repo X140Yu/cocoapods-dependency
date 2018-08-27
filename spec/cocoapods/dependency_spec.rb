@@ -160,9 +160,9 @@ RSpec.describe Cocoapods::Dependency do
     end
 
     res_map = {
-      'Texture' => %w[PINRemoteImage PINCache PINOperation],
+      'Texture' => %w[PINCache PINOperation PINRemoteImage],
       'PINCache' => %w[PINOperation],
-      'PINRemoteImage' => %w[PINOperation PINCache],
+      'PINRemoteImage' => %w[PINCache PINOperation],
       'PINOperation' => [],
     }
 
