@@ -1,7 +1,6 @@
 require 'cocoapods/dependency/version'
 require 'cocoapods'
 require 'pathname'
-require 'pp'
 
 module Cocoapods
   #
@@ -74,9 +73,7 @@ module Cocoapods
       return unless map[name]
       map[name].each do |k|
         find_dependencies(k.name, map, res, specs, root_name)
-        # res.push k.name if specs.find { |s| s.name == k.name }
         dependency = specs.find { |s| s.name == k.name.split('/')[0] }
-        # puts "#{dependency.name} #{name}"
         res.push dependency.name if dependency && dependency.name != root_name
       end
       res
