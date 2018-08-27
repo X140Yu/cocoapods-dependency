@@ -60,7 +60,26 @@ RSpec.describe Cocoapods::Dependency do
 
     res_map = {
       'RxSwift' => [],
-      'RxCocoa' => ['RxSwift'],
+      'RxCocoa' => ['RxSwift']
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end
+
+  it 'dependencies with subspec' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        pod 'SDWebImage', '4.4.2'
+      end
+    end
+
+    res_map = {
+      'SDWebImage' => %w[FLAnimatedImage libwebp],
+      'FLAnimatedImage' => [],
+      'libwebp' => []
     }
 
     expect(
