@@ -7,11 +7,13 @@ module Cocoapods
   #
   class DependencyAnalyzer
     def self.analyze(podfile_dir_path)
+      path = Pathname.new(podfile_dir_path)
+      raise 'absolute path is needed' unless path.absolute?
       Dir.chdir(podfile_dir_path) do
         analyze_with_podfile(
-          podfile_dir_path,
-          Pod::Podfile.from_file(podfile_dir_path + '/Podfile'),
-          Pod::Lockfile.from_file(Pathname.new(podfile_dir_path + '/Podfile.lock'))
+          path,
+          Pod::Podfile.from_file(path + 'Podfile'),
+          Pod::Lockfile.from_file(path + 'Podfile.lock')
         )
       end
     end
@@ -25,7 +27,7 @@ module Cocoapods
           next if dependencies_hash_array.count == 0
           dependencies_hash_array.each do |item|
             next if item.class.name != 'Hash'
-            item.each do |name, value|
+            item.each do |name, _|
               res.push name
             end
           end
@@ -34,7 +36,7 @@ module Cocoapods
       res
     end
 
-    def self.analyze_with_podfile(podfile_dir_path, podfile, lockfile = nil)
+    def self.analyze_with_podfile(_podfile_dir_path, podfile, lockfile = nil)
       analyzer = Pod::Installer::Analyzer.new(
         Pod::Sandbox.new(Dir.mktmpdir),
         podfile,
@@ -60,23 +62,26 @@ module Cocoapods
         end
       end
 
+      # for performance
+      dependencies_map = {}
+      specifications.each do |s|
+        dependencies_map[s.name] = s
+      end
+
       new_map = {}
       specifications.each do |s|
-        new_map[s.name] = find_dependencies(s.name, map, [], specifications, s.name).uniq.sort
+        new_map[s.name] = find_dependencies(s.name, map, [], dependencies_map, s.name).uniq.sort
       end
 
       new_map
     end
 
-    def self.find_dependencies(name, map, res, specs, root_name)
+    def self.find_dependencies(name, map, res, dependencies_map, root_name)
       return unless map[name]
       map[name].each do |k|
-        find_dependencies(k.name, map, res, specs, root_name)
-        dependency = specs.find { |s| s.name == k.name.split('/')[0] }
-        if dependency && dependency.name != root_name
-          res.push dependency.name
-          puts "#{root_name} #{dependency.name}"
-        end
+        find_dependencies(k.name, map, res, dependencies_map, root_name)
+        dependency = dependencies_map[k.name.split('/')[0]]
+        res.push dependency.name if dependency && dependency.name != root_name
       end
       res
     end
