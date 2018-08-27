@@ -1,2 +1,5 @@
 Metrics/MethodLength: 
   Max: 20
+
+Style/TrailingCommaInHashLiteral:
+  Enabled: false

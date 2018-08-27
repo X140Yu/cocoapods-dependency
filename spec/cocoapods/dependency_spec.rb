@@ -72,12 +72,32 @@ RSpec.describe Cocoapods::Dependency do
     podfile = Pod::Podfile.new do
       project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
       target 'Test' do
+        # https://github.com/rs/SDWebImage/blob/master/SDWebImage.podspec
         pod 'SDWebImage', '4.4.2'
       end
     end
 
     res_map = {
       'SDWebImage' => [],
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
+  end
+
+  it 'dependencies with subspec 2' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        # https://github.com/rs/SDWebImage/blob/master/SDWebImage.podspec
+        pod 'SDWebImage/GIF', '4.4.2'
+      end
+    end
+
+    res_map = {
+      'SDWebImage' => ['FLAnimatedImage'],
+      'FLAnimatedImage' => [],
     }
 
     expect(
