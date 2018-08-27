@@ -26,6 +26,27 @@ RSpec.describe Cocoapods::Dependency do
       end
     end
 
-    expect(Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)).to eq({'Masonry' => []})
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq('Masonry' => [])
+  end
+
+  it 'custom podfile with two dependencies' do
+    podfile = Pod::Podfile.new do
+      project 'spec/cocoapods/Fixtures/Test/Test.xcodeproj'
+      target 'Test' do
+        pod 'Masonry'
+        pod 'ReactiveObjC'
+      end
+    end
+
+    res_map = {
+      'Masonry' => [],
+      'ReactiveObjC' => []
+    }
+
+    expect(
+      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('.'), podfile)
+    ).to eq(res_map)
   end
 end
