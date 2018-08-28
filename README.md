@@ -1,38 +1,50 @@
-# Cocoapods::Dependency
+# Cocoapods Dependency
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cocoapods/dependency`. To experiment with that code, run `bin/console` for an interactive prompt.
+A ruby gem which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
 
-TODO: Delete this and the text above, and describe your gem
+## Installation & Usage
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'cocoapods-dependency'
-```
+Clone this repo,
 
 And then execute:
 
+    $ cd cocoapods-dependency
     $ bundle
+    $ bin/analyze /path/to/podfile_dir
 
-Or install it yourself as:
+Note: the argument has to be a absolute path to the podfile directory.
 
-    $ gem install cocoapods-dependency
+You will get a result like this,
 
-## Usage
+```ruby
+{
+  'Texture' => ['PINCache', 'PINOperation', 'PINRemoteImage'],
+  'PINCache' => ['PINOperation'],
+  'PINRemoteImage' => ['PINCache', 'PINOperation'],
+  'PINOperation' => [],
+}
+```
 
-TODO: Write usage instructions here
+## Why this gem?
 
-## Development
+Suppose you have a project with a simple dependency,
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby podfile
+target 'Test' do
+  pod 'Texture', '2.7'
+end
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+It seems like this project has just a single dependency, but behind this pod, it may dependent several other pods and these other pods may also dependent some other pods as well 🤦🏻‍♂️, it's hard to determine what the exactly dependency situation of the project with just a glance of the podfile. So I wrote this it to do this thing.
 
-## Contributing
+- ✅ It can print all the dependencies
+- ✅ Each dependecy's dependencies can also be printed
+- ✅ Subspecs are properly handled, `pod 'Texture', '2.7'` and `pod 'Texture', '2.7', subspecs: %w[PINRemoteImage IGListKit Yoga]` will lead to different results
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cocoapods-dependency.
+## TODO
+
+- [ ] Pretty printed result
+- [ ] Lift it to a cocoapods-plugin
 
 ## License
 
