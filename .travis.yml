@@ -1,5 +1,7 @@
 sudo: false
 language: ruby
+before_install:
+  - pod repo update > /dev/null
 os: osx
 rvm:
   - 2.4.1
