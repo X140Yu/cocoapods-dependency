@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/X140Yu/cocoapods-dependency.svg?branch=master)](https://travis-ci.org/X140Yu/cocoapods-dependency)
 
+
 A ruby gem which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
 
 ## Installation & Usage
