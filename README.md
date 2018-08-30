@@ -1,6 +1,7 @@
 # Cocoapods Dependency
 
 [![Build Status](https://travis-ci.org/X140Yu/cocoapods-dependency.svg?branch=master)](https://travis-ci.org/X140Yu/cocoapods-dependency)
+[![Coverage Status](https://coveralls.io/repos/github/X140Yu/cocoapods-dependency/badge.svg?branch=master)](https://coveralls.io/github/X140Yu/cocoapods-dependency?branch=master)
 
 
 A ruby gem which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
