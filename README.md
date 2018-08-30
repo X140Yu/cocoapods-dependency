@@ -38,7 +38,7 @@ target 'Test' do
 end
 ```
 
-It seems like this project has just a single dependency, but behind this pod, it may dependent several other pods and these other pods may also dependent some other pods as well 🤦🏻‍♂️, it's hard to determine what the exactly dependency situation of the project with just a glance of the podfile. So I wrote this it to do this thing.
+It seems like this project has just a single dependency, but behind this pod, it may depend on several other pods and these other pods may also depend on some other pods as well 🤦🏻‍♂️, it's hard to determine what the exactly dependency situation of the project with just a glance of the podfile. So I wrote this it to do this thing.
 
 - ✅ It can print all the dependencies
 - ✅ Each dependecy's dependencies can also be printed
