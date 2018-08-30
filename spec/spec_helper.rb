@@ -1,8 +1,8 @@
-require 'bundler/setup'
-require 'cocoapods/analyze'
-
 require 'coveralls'
 Coveralls.wear!
+
+require 'bundler/setup'
+require 'cocoapods/analyze'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
