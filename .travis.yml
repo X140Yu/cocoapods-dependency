@@ -5,4 +5,5 @@ rvm:
   - 2.4.1
 before_install: 
   - gem install bundler -v 1.16.1
-  - pod repo update > /dev/null
+  - bundle
+  - bundle exec pod repo update
