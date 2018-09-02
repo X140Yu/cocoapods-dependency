@@ -6,6 +6,8 @@
 
 A ruby gem which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
 
+## [中文说明](https://zhaoxinyu.me/2018-08-20-analyze-pods-dependecy/)
+
 ## Installation & Usage
 
 Clone this repo,
