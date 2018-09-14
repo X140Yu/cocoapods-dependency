@@ -2,23 +2,22 @@
 
 [![Build Status](https://travis-ci.org/X140Yu/cocoapods-dependency.svg?branch=master)](https://travis-ci.org/X140Yu/cocoapods-dependency)
 [![Coverage Status](https://coveralls.io/repos/github/X140Yu/cocoapods-dependency/badge.svg?branch=master)](https://coveralls.io/github/X140Yu/cocoapods-dependency?branch=master)
+[![Gem Version](https://badge.fury.io/rb/cocoapods-dependency.svg)](https://badge.fury.io/rb/cocoapods-dependency)
 
 
-A ruby gem which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
+A CocoaPods plugin which analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
 
 ## [中文说明](https://zhaoxinyu.me/2018-08-20-analyze-pods-dependecy/)
 
-## Installation & Usage
+## Installation
 
-Clone this repo,
+    $ gem install cocoapods-dependency
 
-And then execute:
+## Usage
+   
+    $ pod dependency 
 
-    $ cd cocoapods-dependency
-    $ bundle
-    $ bin/analyze /path/to/podfile_dir
-
-Note: the argument has to be a absolute path to the podfile directory.
+The command should be executed in directory that contains podfile.
 
 You will get a result like this,
 
@@ -49,8 +48,8 @@ It seems like this project has just a single dependency, but behind this pod, it
 
 ## TODO
 
+- [X] Lift it to a cocoapods-plugin
 - [ ] Pretty printed result
-- [ ] Lift it to a cocoapods-plugin
 
 ## License
 

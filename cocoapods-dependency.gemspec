@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Xinyu Zhao']
   spec.email         = ['zhaoxinyu1994@gmail.com']
 
-  spec.summary       = 'Analyze cocoapods dependencies'
-  spec.description   = 'Analyze cocoapods dependenciesssss'
-  spec.homepage      = 'https://zhaoxinyu.me'
+  spec.summary       = 'Analyzes the dependencies of any cocoapods projects.'
+  spec.description   = 'Analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.'
+  spec.homepage      = 'https://github.com/X140Yu/cocoapods-dependency'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_development_dependency 'bundler', '~> 1.16'
-  spec.add_development_dependency 'coveralls'
+  spec.add_development_dependency 'coveralls', '~> 0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
 
