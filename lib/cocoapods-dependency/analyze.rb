@@ -1,14 +1,15 @@
 require 'cocoapods'
 require 'pathname'
 
-module Cocoapods
+module CocoapodsDependency
   #
   # Analyze the project using cocoapods
   #
-  class DependencyAnalyzer
+  class Analyzer
     def self.analyze(podfile_dir_path)
       path = Pathname.new(podfile_dir_path)
       raise 'absolute path is needed' unless path.absolute?
+
       Dir.chdir(podfile_dir_path) do
         analyze_with_podfile(
           path,
@@ -24,9 +25,11 @@ module Cocoapods
         children_definitions = td.recursive_children
         children_definitions.each do |cd|
           dependencies_hash_array = cd.send(:get_hash_value, 'dependencies')
-          next if dependencies_hash_array.count == 0
+          next if dependencies_hash_array.count.zero?
+
           dependencies_hash_array.each do |item|
             next if item.class.name != 'Hash'
+
             item.each do |name, _|
               res.push name
             end
@@ -78,6 +81,7 @@ module Cocoapods
 
     def self.find_dependencies(name, map, res, dependencies_map, root_name)
       return unless map[name]
+
       map[name].each do |k|
         find_dependencies(k.name, map, res, dependencies_map, root_name)
         dependency = dependencies_map[k.name.split('/')[0]]

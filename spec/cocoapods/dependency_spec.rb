@@ -1,10 +1,10 @@
-RSpec.describe Cocoapods::Dependency do
+RSpec.describe 'CocoapodsDependency' do
   it 'has a version number' do
-    expect(Cocoapods::Dependency::VERSION).not_to be nil
+    expect(CocoapodsDependency::VERSION).not_to be nil
   end
 
   it 'no podfile exists in path will raise error' do
-    expect { Cocoapods::DependencyAnalyzer.analyze(Pathname.new('/')) }.to raise_error(/No Podfile exists/)
+    expect { CocoapodsDependency::Analyzer.analyze(Pathname.new('/')) }.to raise_error(/No Podfile exists/)
   end
 
   it 'generate custom podfile' do
@@ -27,7 +27,7 @@ RSpec.describe Cocoapods::Dependency do
     end
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq('Masonry' => [])
   end
 
@@ -46,7 +46,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -64,7 +64,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -82,7 +82,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -101,7 +101,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -122,7 +122,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -146,7 +146,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -167,7 +167,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 
@@ -190,7 +190,7 @@ RSpec.describe Cocoapods::Dependency do
     }
 
     expect(
-      Cocoapods::DependencyAnalyzer.analyze_with_podfile(Pathname.new('/'), podfile)
+      CocoapodsDependency::Analyzer.analyze_with_podfile(Pathname.new('/'), podfile)
     ).to eq(res_map)
   end
 end
