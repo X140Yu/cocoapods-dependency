@@ -1,10 +1,10 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'cocoapods/dependency/version'
+require 'cocoapods-dependency/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'cocoapods-dependency'
-  spec.version       = Cocoapods::Dependency::VERSION
+  spec.version       = CocoapodsDependency::VERSION
   spec.authors       = ['Xinyu Zhao']
   spec.email         = ['zhaoxinyu1994@gmail.com']
 

@@ -1,11 +1,11 @@
 require 'cocoapods'
 require 'pathname'
 
-module Cocoapods
+module CocoapodsDependency
   #
   # Analyze the project using cocoapods
   #
-  class DependencyAnalyzer
+  class Analyzer
     def self.analyze(podfile_dir_path)
       path = Pathname.new(podfile_dir_path)
       raise 'absolute path is needed' unless path.absolute?
