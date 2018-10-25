@@ -1,5 +1,7 @@
 require 'cocoapods-dependency/analyze'
 require 'pp'
+require 'cocoapods-dependency/visual_out'
+
 module Pod
   class Command
 
@@ -10,11 +12,15 @@ module Pod
       Analyzes the dependencies of any cocoapods projects. Subspecs are properly handled.
       DESC
 
-      # self.arguments = 'NAME'
-
       def initialize(argv)
-        @name = argv.shift_argument
+        @using_visual_output = argv.flag?('visual', false)
         super
+      end
+
+      def self.options
+        [
+          ['--visual', 'Output the result using html'],
+        ].concat(super)
       end
 
       def validate!
@@ -23,7 +29,12 @@ module Pod
       end
 
       def run
-        pp CocoapodsDependency::Analyzer.analyze_with_podfile(nil, config.podfile)
+        analyze_result = CocoapodsDependency::Analyzer.analyze_with_podfile(nil, config.podfile)
+        if @using_visual_output
+          
+        else
+          pp result
+        end
       end
     end
   end
