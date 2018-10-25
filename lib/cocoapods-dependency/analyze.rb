@@ -41,7 +41,7 @@ module CocoapodsDependency
 
     def self.analyze_with_podfile(_podfile_dir_path, podfile, lockfile = nil)
       if _podfile_dir_path
-        sandbox = _podfile_dir_path + '/Pods'
+        sandbox = Dir.mktmpdir
       else
         sandbox = Dir.pwd + '/Pods'
       end
