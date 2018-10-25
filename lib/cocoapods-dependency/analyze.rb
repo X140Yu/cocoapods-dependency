@@ -40,8 +40,13 @@ module CocoapodsDependency
     end
 
     def self.analyze_with_podfile(_podfile_dir_path, podfile, lockfile = nil)
+      if _podfile_dir_path
+        sandbox = _podfile_dir_path + '/Pods'
+      else
+        sandbox = Dir.pwd + '/Pods'
+      end
       analyzer = Pod::Installer::Analyzer.new(
-        Pod::Sandbox.new(Dir.mktmpdir),
+        Pod::Sandbox.new(sandbox),
         podfile,
         lockfile
       )
