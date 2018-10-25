@@ -1,4 +1,5 @@
 require 'json'
+require 'cocoapods'
 module CocoapodsDependency
   class VisualOutHelper
     def initialize(dependency_map)
@@ -21,7 +22,12 @@ module CocoapodsDependency
 
       json['links'] = links
 
-      json.to_json
+      JSON.pretty_generate(json)
+    end
+
+    def write_d3js_to_file(path)
+      json = 'var dependencies = ' + to_d3js_json
+      File.write(path, json)
     end
   end
 end
