@@ -31,7 +31,8 @@ module Pod
       def run
         analyze_result = CocoapodsDependency::Analyzer.analyze_with_podfile(nil, config.podfile)
         if @using_visual_output
-          
+          helper = CocoapodsDependency::VisualOutHelper.new(analyze_result)
+          helper.write_d3js_to_file('/tmp/index.js')
         else
           pp result
         end
