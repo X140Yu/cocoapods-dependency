@@ -1,0 +1,18 @@
+{
+  "links": [
+    {
+      "source": "A",
+      "dependencies": [
+        "B",
+        "C"
+      ]
+    },
+    {
+      "source": "B",
+      "dependencies": [
+        "C",
+        "D"
+      ]
+    }
+  ]
+}
