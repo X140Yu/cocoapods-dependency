@@ -14,20 +14,15 @@ A CocoaPods plugin which analyzes the dependencies of any cocoapods projects. Su
     $ gem install cocoapods-dependency
 
 ## Usage
-   
-    $ pod dependency 
 
 The command should be executed in directory that contains podfile.
 
-You will get a result like this,
+```shell
+# put the analyze result to console
+$ pod dependency
 
-```ruby
-{
-  'Texture' => ['PINCache', 'PINOperation', 'PINRemoteImage'],
-  'PINCache' => ['PINOperation'],
-  'PINRemoteImage' => ['PINCache', 'PINOperation'],
-  'PINOperation' => [],
-}
+# write te analyze result to a readable HTML
+$ pod dependency --visual
 ```
 
 ## Why this gem?
@@ -49,7 +44,7 @@ It seems like this project has just a single dependency, but behind this pod, it
 ## TODO
 
 - [X] Lift it to a cocoapods-plugin
-- [ ] Pretty printed result
+- [X] Pretty printed result
 
 ## License
 
