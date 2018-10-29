@@ -32,7 +32,7 @@ module Pod
         analyze_result = CocoapodsDependency::Analyzer.analyze_with_podfile(nil, config.podfile)
         if @using_visual_output
           helper = CocoapodsDependency::VisualOutHelper.new(analyze_result)
-          helper.write_d3js_to_file('/tmp/index.js')
+          helper.write_json_to_file('/tmp/index.json')
         else
           pp result
         end
