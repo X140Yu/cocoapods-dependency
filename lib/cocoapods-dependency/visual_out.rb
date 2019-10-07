@@ -22,11 +22,20 @@ module CocoapodsDependency
       end
 
       json['links'] = links
-
       JSON.pretty_generate(json)
     end
 
     def write_json_to_file(path)
+      json_result = JSON.pretty_generate(dependency_hash)
+      File.write(path, json_result)
+    end
+
+    def write_d3js_to_file(path)
+      json = 'var dependencies = ' + to_d3js_json
+      File.write(path, json)
+    end
+
+    def dependency_hash
       links = []
       json = {}
       @dependency_map.each do |node, v|
@@ -38,13 +47,7 @@ module CocoapodsDependency
         )
       end
       json['links'] = links
-      json_result = JSON.pretty_generate(json)
-      File.write(path, json_result)
-    end
-
-    def write_d3js_to_file(path)
-      json = 'var dependencies = ' + to_d3js_json
-      File.write(path, json)
+      return json
     end
   end
 end

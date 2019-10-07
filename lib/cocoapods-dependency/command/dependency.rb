@@ -2,6 +2,7 @@ require 'cocoapods-dependency/analyze'
 require 'pp'
 require 'cocoapods-dependency/visual_out'
 require 'tmpdir'
+require 'json'
 
 module Pod
   class Command
@@ -15,12 +16,14 @@ module Pod
 
       def initialize(argv)
         @using_visual_output = argv.flag?('visual', false)
+        @to_output_json = argv.flag?('json', false)
         super
       end
 
       def self.options
         [
           ['--visual', 'Output the result using html'],
+          ['--json', 'Output in JSON format']
         ].concat(super)
       end
 
@@ -41,7 +44,11 @@ module Pod
           puts "[CocoapodsDependency] ✅ html file generated at path #{final_html_path}"
           system "open #{final_html_path}"
         else
-          pp result
+          if @to_output_json
+            puts JSON.pretty_generate(analyze_result)
+          else
+            pp analyze_result
+          end
         end
       end
     end
