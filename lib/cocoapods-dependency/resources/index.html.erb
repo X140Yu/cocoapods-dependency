@@ -15,7 +15,6 @@
       }
 
       #nav {
-        padding: 10px 30px;
         float: left;
         width: 30%;
         height: 100%;
@@ -23,20 +22,16 @@
       }
 
       #content {
-        padding: 10px 30px;
         float: left;
         width: 60%;
         height: 100%;
         overflow: scroll;
-      }        
+      }
   </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
-  <body onload="pageDidLoad()">
   <script>
 
-    function loadJSON(fileName, callback) {   
+    function loadJSON(fileName, callback) {
       var xobj = new XMLHttpRequest();
       xobj.overrideMimeType("application/json");
       xobj.open('GET', fileName, true);
@@ -51,12 +46,14 @@
     function pageDidLoad() {
       loadJSON('index.json', response => {
         var actual_JSON = JSON.parse(response);
-
-        let podNames = actual_JSON.links.map(s => s.source);
-
-        renderNavs(podNames)
-        renderPods(actual_JSON.links)
+        loadData(actual_JSON);
       });
+    }
+
+    function loadData(actual_JSON) {
+      let podNames = actual_JSON.links.map(s => s.source);
+      renderNavs(podNames)
+      renderPods(actual_JSON.links)
     }
 
     function renderNavs(podNames) {
@@ -76,9 +73,9 @@
         let header = document.createElement('h3')
         header.innerHTML = element.source
         header.id = element.source
-        
+
         div.appendChild(header)
-        
+
         let ul = document.createElement('ul')
         let dependencies = element.dependencies.sort()
         dependencies.forEach(dependency => {
@@ -89,8 +86,8 @@
           ul.appendChild(li)
           li.appendChild(a)
         })
-      
-        div.appendChild(ul)      
+
+        div.appendChild(ul)
         d.appendChild(div)
       })
     }
@@ -105,6 +102,11 @@
   <div id="content">
     <div id="pods"></div>
   </div>
+
+  <script type="text/javascript">
+    var actual_JSON = <%= result %>;
+    loadData(actual_JSON);
+  </script>
 </body>
 
 </html>

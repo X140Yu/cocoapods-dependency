@@ -2,6 +2,8 @@ require 'cocoapods-dependency/analyze'
 require 'pp'
 require 'cocoapods-dependency/visual_out'
 require 'tmpdir'
+require 'json'
+require 'erb'
 
 module Pod
   class Command
@@ -15,12 +17,14 @@ module Pod
 
       def initialize(argv)
         @using_visual_output = argv.flag?('visual', false)
+        @to_output_json = argv.flag?('json', false)
         super
       end
 
       def self.options
         [
           ['--visual', 'Output the result using html'],
+          ['--json', 'Output in JSON format']
         ].concat(super)
       end
 
@@ -33,17 +37,45 @@ module Pod
         analyze_result = CocoapodsDependency::Analyzer.analyze_with_podfile(nil, config.podfile)
         if @using_visual_output
           helper = CocoapodsDependency::VisualOutHelper.new(analyze_result)
-          final_path = Dir.tmpdir
-          helper.write_json_to_file("#{final_path}/index.json")
-          html_path = File.expand_path("../resources/index.html", __dir__)
-          system "cp #{html_path} #{final_path}"
-          final_html_path = "#{final_path}/index.html"
-          puts "[CocoapodsDependency] ✅ html file generated at path #{final_html_path}"
-          system "open #{final_html_path}"
+          path = final_path
+          render_template(JSON.generate(helper.dependency_hash), path)
+          system "open #{path}"
         else
-          pp result
+          if @to_output_json
+            puts JSON.pretty_generate(analyze_result)
+          else
+            pp analyze_result
+          end
         end
       end
+
+      private
+
+      def final_path
+        d = File.join(Dir.tmpdir, 'pod')
+        if not Dir.exist?(d)
+          Dir.mkdir(d)
+        end
+        "#{Dir.tmpdir}/pod/index.html"
+      end
+
+      def render_template(result, final_path)
+        File.open(final_path, 'w') do |f|
+          f.puts(template_content(result))
+        end
+      end
+
+      def template_content(result)
+        f = File.open(template_path)
+        template = ERB.new(f.read)
+        f.close
+        return template.result(binding)
+      end
+
+      def template_path
+        File.expand_path("../resources/index.html.erb", __dir__)
+      end
+
     end
   end
 end
