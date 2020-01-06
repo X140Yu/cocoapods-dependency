@@ -41,7 +41,7 @@ module Pod
           puts "[CocoapodsDependency] ✅ html file generated at path #{final_html_path}"
           system "open #{final_html_path}"
         else
-          pp result
+          pp analyze_result
         end
       end
     end
