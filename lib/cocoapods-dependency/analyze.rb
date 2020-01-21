@@ -25,7 +25,7 @@ module CocoapodsDependency
         children_definitions = td.recursive_children
         children_definitions.each do |cd|
           dependencies_hash_array = cd.send(:get_hash_value, 'dependencies')
-          next if dependencies_hash_array.count.zero?
+          next if dependencies_hash_array.nil? || dependencies_hash_array.count.zero?
 
           dependencies_hash_array.each do |item|
             next if item.class.name != 'Hash'
